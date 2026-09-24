@@ -3,30 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video</title>
+    <title>Mc Pista Video</title>
     <style>
         body { 
             margin: 0; 
             background: black; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
             height: 100vh; 
             overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        video { 
+
+        #splash-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('thumbnail.jpg') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+        }
+        
+        #splash-overlay::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); 
+        }
+
+        #splash-text {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+            z-index: 21;
+            padding: 0 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+       
+        #play-btn {
+            background: rgba(255, 0, 0, 0.8); 
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 22px;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 21;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: transform 0.1s;
+            font-weight: 600;
+        }
+
+        #play-btn:hover {
+            background: rgba(200, 0, 0, 0.8);
+        }
+
+        #play-btn:active {
+            transform: scale(0.97); 
+        }
+
+        #myVideo { 
+            position: absolute;
+            top: 0; left: 0;
             width: 100%; 
-            max-height: 100vh; 
+            height: 100%; 
+            object-fit: cover; 
+            z-index: 10; 
         }
     </style>
 </head>
 <body>
+    <div id="splash-overlay">
+        <div id="splash-text">Mc Pista mondani akar neked valamit</div>
+        <button id="play-btn">▶ Lejátszás</button>
+    </div>
 
-    <!-- autoplay, muted, and playsinline bypass mobile restrictions -->
-    <video autoplay muted playsinline controls>
-        <source src="istvan.mp4" type="video/mp4">
-        Valami gaty
+    <video id="myVideo" playsinline controls>
+        <source src="myvideo.mp4" type="video/mp4">
+        Your browser does not support the video tag.
     </video>
+
+    <script>
+        document.getElementById('play-btn').addEventListener('click', function() {
+            var splash = document.getElementById('splash-overlay');
+            var video = document.getElementById('myVideo');
+
+            splash.style.display = 'none';
+
+            video.play();
+            
+            if (video.requestFullscreen) {
+                video.requestFullscreen();
+            } else if (video.webkitRequestFullscreen) {
+                video.webkitRequestFullscreen();
+            }
+        });
+    </script>
 
 </body>
 </html>
